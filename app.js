@@ -28,7 +28,7 @@ var boatObject = {
     description : "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam veniam autem adipisci ipsum consequuntur voluptate? Quae, corrupti. Ipsum eos fugiat exercitationem consequuntur quasi!"
 }
 
-const serviceArray = [carObject,busObject,bikeObject,boatObject];
+ const servicesArray = [carObject,busObject,bikeObject,boatObject, carObject];
 function displayServices(service){
     const mainSection = document.getElementById('main-section');
     const stringifieObj = JSON.stringify(service);
@@ -36,10 +36,10 @@ function displayServices(service){
 
     div.innerHTML = `
 
-            <div class="card mb-3 mx-auto" style="max-width: 540px;">
+            <div class="card mb-3 mx-auto" style="max-width: 800px;">
         <div class="row g-0">
             <div class="col-md-4">
-            <img src="${service.imageUrl}" class="img-fluid rounded-start" alt="...">
+            <img src="${service.imageUrl}" class="img-fluid rounded-start h-100" alt="...">
             </div>
             <div class="col-md-8">
             <div class="card-body">
@@ -47,11 +47,58 @@ function displayServices(service){
                 <p class="card-text">${service.description}</p>
                 <p class="card-text"><small class="text-muted">Fare per kilo ${service.farePerkilo}</small> <small class="text-muted">Fare per kilo ${service.capacity}</small></p>
             </div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary mx-3" data-bs-toggle="modal" onclick='handleBookng(${stringifieObj})' data-bs-target="#exampleModal">
+            Launch demo modal
+            </button>
+
             </div>
         </div>
         </div> 
+
+       
     `
     mainSection.appendChild(div)
 }
+function disiplayAllArticles(arr){
+    // for (let i = 0 ; i < arr.length ; i++ ){
+    //     const element = arr[i];
+    //     displayServices(element);
+    // }
 
-displayServices(serviceArray);
+    let i = 0 ;
+    while( i < arr.length ){
+        const element = arr[i];
+        displayServices(element)
+        i++ ;
+    }
+}
+
+disiplayAllArticles(servicesArray)
+
+
+function handleBookng(obj){
+    const modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = `
+
+    <div class="card mx-auto" style="width: 18rem;">
+    <img src="${obj.imageUrl}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Vehicle Mood ${obj.vehicle}</h5>
+      <p class="card-text">${obj.description}</p>
+      <p class="card-text"> <small class="text-muted">Fare per kilo ${obj.farePerkilo}</small>
+      <small class="text-muted">Capacity ${obj.capacity}</small></p>
+      
+      <div class="d-flex flex-column mb-2 p-4" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" id="search-value" aria-label="Search">
+        <input class="form-control me-2" type="search" placeholder="Search" id="search-value" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit" onclick='calculateCoast('Hello')' id="search-btn"> Submit </button>
+      </div>
+      
+    </div>
+  </div>
+    
+    `
+}
+
+
